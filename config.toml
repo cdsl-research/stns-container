@@ -1,0 +1,10 @@
+port = 1104
+
+[users.example]
+id = 1001
+group_id = 1001
+keys = ["ssh-rsa XXXXX"]
+
+[groups.example]
+id = 1001
+users = ["example"]
