@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-sync-deploy
+  labels:
+    app: git-sync
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: git-sync
+  template:
+    metadata:
+      labels:
+        app: git-sync
+    spec:
+      containers:
+        - name: git-sync
+          image: k8s.gcr.io/git-sync/git-sync:v3.3.4
+          env:
+            - name: GIT_SYNC_REPO
+              value: "https://github.com/cdsl-research/stns-config"
+            - name: GIT_SYNC_BRANCH
+              value: master
+            - name: GIT_SYNC_DEPTH
+              value: 1
+            - name: GIT_SYNC_DEST
+              value: /config
+            - name: GIT_SYNC_SSH
+              value: true
+            - name: GIT_SSH_KEY_FILE
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: username
+            - name: GIT_KNOWN_HOSTS
+              value: false
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+        - name: stns-server
+          image: ghcr.io/cdsl-research/stns-container:master
+          ports:
+            - containerPort: 1104
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+      volumes:
+        - name: config-volume
+          emptyDir: {}
