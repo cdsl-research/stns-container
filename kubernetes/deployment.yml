@@ -14,6 +14,16 @@ spec:
       labels:
         app: stns
     spec:
+      volumes:
+        #- name: config-volume
+        #  emptyDir: {}
+        - name: ssh-key-volume
+          secret:
+            secretName: git-sync-ssh-key
+            items:
+              - key: id_ed25519
+                path: id_ed25519
+                mode: 0600
       containers:
         - name: git-sync
           image: k8s.gcr.io/git-sync/git-sync:v3.3.4
@@ -24,9 +34,10 @@ spec:
             requests:
               memory: 64Mi
               cpu: "0.1"
+          # command: ["sleep", "65535"]
           args:
             - "-ssh"
-            - "-repo=git@github.com:cdsl-research/stns-config"
+            - "-repo=github.com:cdsl-research/stns-config"
             - "-root=/tmp/git"
             # - "--sync-hook-command=xxx"
             - "-branch=master"
@@ -35,10 +46,12 @@ spec:
             - "-ssh-known-hosts=false"
             - "-wait=60"
           volumeMounts:
-            - name: config-volume
-              mountPath: /config
+            #- name: config-volume
+            #  mountPath: /config
             - name: ssh-key-volume
               mountPath: /etc/git-secret/ssh
+          securityContext:
+            runAsUser: 65533
         # - name: stns-server
         #   image: ghcr.io/cdsl-research/stns-container:master
         #   ports:
@@ -47,13 +60,5 @@ spec:
         #     - name: config-volume
         #       mountPath: /config
         #       readOnly: true
-      volumes:
-        - name: config-volume
-          emptyDir: {}
-        - name: ssh-key-volume
-          secret:
-            secretName: git-sync-ssh-key
-            items:
-              - key: id_ed25519
-                path: id_ed25519
-                mode: 0600
+      securityContext:
+        fsGroup: 65533
