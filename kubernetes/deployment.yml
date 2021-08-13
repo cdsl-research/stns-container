@@ -5,7 +5,7 @@ metadata:
   labels:
     app: stns
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: stns
@@ -22,7 +22,7 @@ spec:
             secretName: git-sync-ssh-key
             items:
               - key: id_ed25519
-                path: id_ed25519
+                path: ssh
                 mode: 0600
       containers:
         - name: git-sync
@@ -37,19 +37,19 @@ spec:
           # command: ["sleep", "65535"]
           args:
             - "-ssh"
-            - "-repo=github.com:cdsl-research/stns-config"
-            - "-root=/tmp/git"
-            # - "--sync-hook-command=xxx"
+            - "-repo=git@github.com:cdsl-research/stns-config"
+          #   # - "-root=/tmp/git"
+          #   # - "--sync-hook-command=xxx"
             - "-branch=master"
             - "-depth=1"
-            - "-ssh-key-file=/etc/git-secret/ssh/id_ed25519"
+          #   - "-ssh-key-file=/etc/git-secret/ssh"
             - "-ssh-known-hosts=false"
             - "-wait=60"
           volumeMounts:
             #- name: config-volume
             #  mountPath: /config
             - name: ssh-key-volume
-              mountPath: /etc/git-secret/ssh
+              mountPath: /etc/git-secret
           securityContext:
             runAsUser: 65533
         # - name: stns-server
