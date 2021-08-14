@@ -6,12 +6,12 @@ do
   echo "WAITING"
   sleep 1
 done
-
-cd /src/stns-config
-pip install -r requirements.txt
+pip install -r /src/stns-config/requirements.txt
 
 while :
 do
+  cd /src/stns-config
+
   CURRENT_HASH=$(git rev-parse HEAD)
   if [ "$NOTE_HASH" == "$CURRENT_HASH" ]
   then
@@ -26,5 +26,5 @@ do
     mv cdsl.toml /config/.
   fi
 
-  sleep 60
+  sleep 10
 done
