@@ -74,20 +74,20 @@ spec:
               mountPath: /src
             - name: config-volume
               mountPath: /config
-        # - name: stns-server
-        #   image: ghcr.io/cdsl-research/stns-container:master
-        #   resources:
-        #     limits:
-        #       memory: 128Mi
-        #       cpu: "1"
-        #     requests:
-        #       memory: 32Mi
-        #       cpu: "0.1"
-        #   ports:
-        #     - containerPort: 1104
-        #   volumeMounts:
-        #     - name: config-volume
-        #       mountPath: /config
-        #       readOnly: true
+        - name: stns-server
+          image: ghcr.io/cdsl-research/stns-container:master
+          resources:
+            limits:
+              memory: 128Mi
+              cpu: "1"
+            requests:
+              memory: 32Mi
+              cpu: "0.1"
+          ports:
+            - containerPort: 1104
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config2
+              readOnly: true
       securityContext:
         fsGroup: 65533
