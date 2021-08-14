@@ -87,7 +87,7 @@ spec:
             - containerPort: 1104
           volumeMounts:
             - name: config-volume
-              mountPath: /config2
+              mountPath: /config
               readOnly: true
       securityContext:
         fsGroup: 65533
