@@ -15,8 +15,17 @@ spec:
         app: stns
     spec:
       volumes:
-        #- name: config-volume
-        #  emptyDir: {}
+        # Build script: builder.sh
+        - name: builder-assets-volume
+          configMap:
+            name: builder-config
+        # Share git sources between git-sync and builder
+        - name: git-source-volume
+          emptyDir: {}
+        # Share build config 'cdsl.toml' between builder and stns-server
+        - name: config-volume
+          emptyDir: {}
+        # SSH Praivate Key
         - name: ssh-key-volume
           secret:
             secretName: git-sync-ssh-key
@@ -29,10 +38,10 @@ spec:
           image: k8s.gcr.io/git-sync/git-sync:v3.3.4
           resources:
             limits:
-              memory: 256Mi
+              memory: 128Mi
               cpu: "1"
             requests:
-              memory: 64Mi
+              memory: 32Mi
               cpu: "0.1"
           args:
             - "-ssh"
@@ -43,14 +52,38 @@ spec:
             - "-ssh-known-hosts=false"
             - "-wait=60"
           volumeMounts:
-            #- name: config-volume
-            #  mountPath: /config
+            - name: git-source-volume
+              mountPath: /tmp/git
             - name: ssh-key-volume
               mountPath: /etc/git-secret
           securityContext:
             runAsUser: 65533
+        - name: builder
+          image: python:3.9-alpine
+          resources:
+            limits:
+              memory: 128Mi
+              cpu: "1"
+            requests:
+              memory: 32Mi
+              cpu: "0.1"
+          command: ["/bin/sh", "/builder/build.sh"]
+          volumeMounts:
+            - name: builder-assets-volume
+              mountPath: /builder
+            - name: git-source-volume
+              mountPath: /src
+            - name: config-volume
+              mountPath: /config
         # - name: stns-server
         #   image: ghcr.io/cdsl-research/stns-container:master
+        #   resources:
+        #     limits:
+        #       memory: 128Mi
+        #       cpu: "1"
+        #     requests:
+        #       memory: 32Mi
+        #       cpu: "0.1"
         #   ports:
         #     - containerPort: 1104
         #   volumeMounts:
