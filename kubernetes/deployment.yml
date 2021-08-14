@@ -46,7 +46,6 @@ spec:
           args:
             - "-ssh"
             - "-repo=git@github.com:cdsl-research/stns-config"
-          #   # - "--sync-hook-command=xxx"
             - "-branch=master"
             - "-depth=1"
             - "-ssh-known-hosts=false"
