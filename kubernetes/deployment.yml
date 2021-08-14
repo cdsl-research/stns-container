@@ -34,15 +34,12 @@ spec:
             requests:
               memory: 64Mi
               cpu: "0.1"
-          # command: ["sleep", "65535"]
           args:
             - "-ssh"
             - "-repo=git@github.com:cdsl-research/stns-config"
-          #   # - "-root=/tmp/git"
           #   # - "--sync-hook-command=xxx"
             - "-branch=master"
             - "-depth=1"
-          #   - "-ssh-key-file=/etc/git-secret/ssh"
             - "-ssh-known-hosts=false"
             - "-wait=60"
           volumeMounts:
