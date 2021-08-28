@@ -13,5 +13,5 @@ FROM alpine:3.14
 EXPOSE 1104/tcp
 WORKDIR /stns
 COPY --from=builder /artifacts /stns
-COPY config.toml /config/
-ENTRYPOINT ["/stns/stns", "--config", "/conf/config.toml", "server"]
+ENTRYPOINT ["/stns/stns"]
+CMD ["--config", "/conf/config.toml", "server"]
