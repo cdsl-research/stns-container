@@ -33,7 +33,7 @@ spec:
               - key: id_ed25519
                 path: ssh
                 mode: 0600
-      containers:
+      initContainers:
         - name: git-sync
           image: k8s.gcr.io/git-sync/git-sync:v3.3.4
           resources:
@@ -74,8 +74,10 @@ spec:
               mountPath: /src
             - name: config-volume
               mountPath: /config
+      containers:
         - name: stns-server
           image: ghcr.io/cdsl-research/stns-container:master
+          args: ["--config", "/conf/cdsl.toml", "server"]
           resources:
             limits:
               memory: 128Mi
