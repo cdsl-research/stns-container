@@ -33,7 +33,7 @@ spec:
               - key: id_ed25519
                 path: ssh
                 mode: 0600
-      initContainers:
+      containers:
         - name: git-sync
           image: k8s.gcr.io/git-sync/git-sync:v3.3.4
           resources:
@@ -49,7 +49,7 @@ spec:
             - "-branch=master"
             - "-depth=1"
             - "-ssh-known-hosts=false"
-            - "-wait=60"
+            - "-wait=30"
           volumeMounts:
             - name: git-source-volume
               mountPath: /tmp/git
@@ -74,10 +74,9 @@ spec:
               mountPath: /src
             - name: config-volume
               mountPath: /config
-      containers:
         - name: stns-server
-          image: ghcr.io/cdsl-research/stns-container:master
-          args: ["--config", "/conf/cdsl.toml", "server"]
+          image: ghcr.io/cdsl-research/stns-container:master-3d7b515
+          args: ["--config", "/config/cdsl.toml", "server"]
           resources:
             limits:
               memory: 128Mi

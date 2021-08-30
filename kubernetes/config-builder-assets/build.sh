@@ -26,5 +26,5 @@ do
     mv cdsl.toml /config/.
   fi
 
-  sleep 10
+  sleep 1
 done
