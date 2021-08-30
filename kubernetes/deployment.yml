@@ -51,7 +51,7 @@ spec:
             - "-branch=master"
             - "-depth=1"
             - "-ssh-known-hosts=false"
-            - "-wait=60"
+            - "-wait=30"
           volumeMounts:
             - name: git-source-volume
               mountPath: /tmp/git
@@ -80,6 +80,7 @@ spec:
 
         - name: stns-server
           image: ghcr.io/cdsl-research/stns-container:master-3d7b515
+          args: ["--config", "/config/cdsl.toml", "server"]
           resources:
             limits:
               memory: 128Mi
