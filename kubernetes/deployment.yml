@@ -36,6 +36,7 @@ spec:
       securityContext:
         fsGroup: 65533
       shareProcessNamespace: true
+
       containers:
         - name: git-sync
           image: k8s.gcr.io/git-sync/git-sync:v3.3.4
