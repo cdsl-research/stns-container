@@ -24,6 +24,7 @@ do
     NOTE_HASH="$CURRENT_HASH"
     python gen.py
     mv cdsl.toml /config/.
+    pkill stns
   fi
 
   sleep 1
