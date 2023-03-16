@@ -12,6 +12,8 @@ Register public key file `id_ed25519.pub` to GitHub repository on which ssh keys
 
 https://qiita.com/tamorieeeen/items/c24f8285448b607b12dd
 
+https://github.com/cdsl-research/stns-config に公開鍵を登録する．手順は上記のURLを参照．
+
 Create secrets
 
 ```
