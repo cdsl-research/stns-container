@@ -29,9 +29,3 @@ Deploy containers
 ```
 kubectl apply -f deployment.yml -f service.yml
 ```
-
-## Delete
-
-```
-kubectl delete configmap builder-config
-```
