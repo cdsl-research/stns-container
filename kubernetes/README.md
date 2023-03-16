@@ -8,6 +8,10 @@ Generate SSH Key
 ssh-keygen -t ed25519
 ```
 
+Register public key to GitHub repository on which ssh keys stored as 'Deploy keys'
+
+https://qiita.com/tamorieeeen/items/c24f8285448b607b12dd
+
 Create secrets
 
 ```
