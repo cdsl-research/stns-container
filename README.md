@@ -4,6 +4,10 @@
 
 STNS Server
 
+> [!WARNING]
+> This container image will be deprecated because STNS official container image supported multiple layer builds.
+> See also: https://github.com/cdsl-research/stns-container/issues/13
+
 ## Usage
 
 Create a single container by docker command
