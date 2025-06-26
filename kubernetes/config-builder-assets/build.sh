@@ -1,6 +1,9 @@
 NOTE_HASH=""
 
 apk add git
+
+rm -f /root/.gitconfig.lock
+
 while [ ! -e "/src/stns-config/gen.py" ]
 do
   echo "WAITING"
