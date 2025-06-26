@@ -32,5 +32,5 @@ do
     pkill stns
   fi
 
-  sleep 1
+  sleep 30
 done
