@@ -8,14 +8,6 @@ do
 done
 pip install -r /src/stns-config/requirements.txt
 
-
-for dir in /src/*; do
-  if [ -d "$dir/.git" ]; then
-    echo "Registering safe.directory: $dir"
-    git config --global --add safe.directory "$dir"
-  fi
-done
-
 while :
 do
   date +"%Y-%m-%d %H:%M:%S" | tr -d '\n'
@@ -23,6 +15,7 @@ do
   echo " STNS PID = $STNS_PID"
   cd /src/stns-config
 
+　git config --global --add safe.directory /src/$(ls ../ | head -1)
   CURRENT_HASH=$(git rev-parse HEAD)
   if [ "$NOTE_HASH" == "$CURRENT_HASH" ]
   then
