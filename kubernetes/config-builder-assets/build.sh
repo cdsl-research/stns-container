@@ -15,7 +15,7 @@ do
   echo " STNS PID = $STNS_PID"
   cd /src/stns-config
 
-　git config --global --add safe.directory /src/a97e5a809c465d2b2fad6a4ae33638d9259c73b0
+  git config --global --add safe.directory /src/a97e5a809c465d2b2fad6a4ae33638d9259c73b0
   CURRENT_HASH=$(git rev-parse HEAD)
   if [ "$NOTE_HASH" == "$CURRENT_HASH" ]
   then
